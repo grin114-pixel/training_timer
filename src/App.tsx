@@ -93,6 +93,8 @@ export default function App() {
         </div>
 
         {/* Main Timer Circle */}
+        <div className="timer-block">
+        <div className="timer-stack">
         <div className="timer-container">
           <div className="timer-ring-wrapper">
             <svg className="timer-svg" viewBox="0 0 280 280">
@@ -138,15 +140,6 @@ export default function App() {
             </svg>
 
             <div className="timer-center">
-              {status !== 'idle' && status !== 'finished' && currentPhase.type !== 'warmup' && (
-                <div className="phase-badge" style={{ borderColor: `${color}55` }}>
-                  <span className="phase-badge-icon">{icon}</span>
-                  <span className="phase-badge-label" style={{ color }}>
-                    {currentPhase.label}
-                  </span>
-                </div>
-              )}
-
               {status === 'idle' ? (
                 <div className="idle-content">
                   <span className="idle-icon">🏋️</span>
@@ -161,14 +154,12 @@ export default function App() {
                 <div className="running-content">
                   <span className="phase-time">{formatTime(phaseRemaining)}</span>
 
-                  {currentPhase.type === 'warmup' && (
-                    <div className="warmup-top">
-                      <span className="warmup-icon">{icon}</span>
-                      <span className="warmup-label" style={{ color }}>
-                        {currentPhase.label}
-                      </span>
-                    </div>
-                  )}
+                  <div className="phase-top">
+                    <span className="phase-top-icon">{icon}</span>
+                    <span className="phase-top-label" style={{ color }}>
+                      {currentPhase.label}
+                    </span>
+                  </div>
 
                   {status === 'running' && (
                     <button type="button" className="timer-btn timer-btn-pause" onClick={pause}>
@@ -211,8 +202,8 @@ export default function App() {
             )}
           </div>
         </div>
+        </div>
 
-        {/* Next phase (below timer) */}
         {status !== 'idle' && status !== 'finished' && nextPhase && (
           <div className="next-under" aria-label="다음 운동">
             <span className="next-under-label">다음</span>
@@ -221,6 +212,7 @@ export default function App() {
             <span className="next-under-time">{formatTime(nextPhase.duration)}</span>
           </div>
         )}
+        </div>
 
         {/* Controls */}
         <div className="controls">
