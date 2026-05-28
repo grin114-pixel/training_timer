@@ -48,11 +48,12 @@ body {
 .app-inner {
   width: 100%;
   max-width: 480px;
-  padding: 24px 20px 40px;
+  min-height: 100dvh;
+  padding: 16px 20px 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 20px;
+  gap: 10px;
 }
 
 /* ===== Header ===== */
@@ -61,6 +62,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  flex-shrink: 0;
 }
 
 .app-header-brand {
@@ -104,6 +106,7 @@ body {
   height: 6px;
   border-radius: 100px;
   overflow: hidden;
+  flex-shrink: 0;
 }
 
 .sequence-step {
@@ -126,9 +129,12 @@ body {
 .timer-container {
   position: relative;
   width: 100%;
+  flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 48px 0 40px;
+  min-height: 0;
 }
 
 .timer-ring-wrapper {
@@ -370,6 +376,11 @@ body {
   gap: 12px;
   width: 100%;
   justify-content: center;
+  flex-shrink: 0;
+}
+
+.controls:empty {
+  display: none;
 }
 
 /* Next phase under timer */
@@ -384,6 +395,7 @@ body {
   border: 1px solid var(--border);
   background: rgba(255, 255, 255, 0.03);
   color: var(--text-secondary);
+  flex-shrink: 0;
 }
 
 .next-under-label {
@@ -485,8 +497,12 @@ body {
 
 @media (max-width: 520px) {
   .app-inner {
-    padding: 18px 16px 18px;
-    gap: 14px;
+    padding: 12px 16px 8px;
+    gap: 8px;
+  }
+
+  .timer-container {
+    padding: 40px 0 32px;
   }
 }
 

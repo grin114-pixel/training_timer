@@ -57,10 +57,10 @@ export default function App() {
         <header className="app-header">
           <div className="app-header-brand">
             <svg className="app-header-icon" viewBox="0 0 48 48" width={32} height={32} aria-hidden>
-              <circle cx="24" cy="26" r="16" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
-              <path d="M24 14V10M24 10H20M24 10H28" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-              <path d="M24 26V18" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
-              <path d="M24 26L30 30" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
+              <circle cx="24" cy="24" r="16" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
+              <path d="M24 12V8M24 8H20M24 8H28" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+              <path d="M24 24V16" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
+              <path d="M24 24L30 28" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
             </svg>
             <h1 className="app-title">운동 타이머</h1>
           </div>
