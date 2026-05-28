@@ -68,6 +68,13 @@ export function useWorkoutTimer() {
     setStatus('running')
   }, [])
 
+  const reset = useCallback(() => {
+    setElapsed(0)
+    setStatus('idle')
+    sessionIdRef.current = null
+    startTimeRef.current = null
+  }, [])
+
   const jumpToPhase = useCallback(
     async (phaseIndex: number) => {
       const idx = Math.max(0, Math.min(phaseIndex, WORKOUT_SEQUENCE.length - 1))
@@ -115,6 +122,7 @@ export function useWorkoutTimer() {
     start,
     pause,
     resume,
+    reset,
     jumpToPhase,
   }
 }

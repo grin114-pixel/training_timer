@@ -1,6 +1,7 @@
 import { useWorkoutTimer } from './hooks/useWorkoutTimer'
 import { WORKOUT_SEQUENCE, formatTime } from './lib/workoutSequence'
 import './App.css'
+import { useWakeLock } from './hooks/useWakeLock'
 
 const PHASE_COLORS: Record<string, string> = {
   warmup: '#f59e0b',
@@ -17,7 +18,7 @@ const PHASE_BG: Record<string, string> = {
 }
 
 const PHASE_ICONS: Record<string, string> = {
-  warmup: '🤸',
+  warmup: '🙆‍♀️',
   run: '🏃',
   walk: '🚶',
   cooldown: '🧘',
@@ -35,8 +36,11 @@ export default function App() {
     start,
     pause,
     resume,
+    reset,
     jumpToPhase,
   } = useWorkoutTimer()
+
+  useWakeLock(status === 'running' || status === 'paused')
 
   const color = PHASE_COLORS[currentPhase?.type ?? 'warmup']
   const bg = PHASE_BG[currentPhase?.type ?? 'warmup']
@@ -49,6 +53,8 @@ export default function App() {
     currentPhaseIndex < WORKOUT_SEQUENCE.length - 1
       ? WORKOUT_SEQUENCE[currentPhaseIndex + 1]
       : null
+
+  const nextColor = nextPhase ? PHASE_COLORS[nextPhase.type] : undefined
 
   return (
     <div className="app" style={{ '--phase-color': color, '--phase-bg': bg } as React.CSSProperties}>
@@ -64,11 +70,22 @@ export default function App() {
             </svg>
             <h1 className="app-title">운동 타이머</h1>
           </div>
-          {status !== 'idle' && (
-            <div className="total-remaining">
-              전체 {formatTime(totalRemaining)} 남음
-            </div>
-          )}
+          <div className="app-header-actions">
+            {status !== 'idle' && (
+              <div className="total-remaining">
+                전체 {formatTime(totalRemaining)} 남음
+              </div>
+            )}
+            <button
+              type="button"
+              className="header-btn"
+              onClick={reset}
+              disabled={status === 'idle'}
+              aria-disabled={status === 'idle'}
+            >
+              처음으로
+            </button>
+          </div>
         </header>
 
         {/* Phase Sequence Bar */}
@@ -84,7 +101,7 @@ export default function App() {
                   i === currentPhaseIndex && status !== 'idle'
                     ? PHASE_COLORS[phase.type]
                     : i < currentPhaseIndex && status !== 'idle'
-                    ? `${PHASE_COLORS[phase.type]}55`
+                    ? `${PHASE_COLORS[phase.type]}AA`
                     : undefined,
               }}
               title={`${phase.label} ${formatTime(phase.duration)}`}
@@ -142,7 +159,7 @@ export default function App() {
             <div className="timer-center">
               {status === 'idle' ? (
                 <div className="idle-content">
-                  <span className="idle-icon">🏋️</span>
+                  <span className="idle-icon">🙆‍♀️</span>
                   <span className="idle-text">시작 준비</span>
                 </div>
               ) : status === 'finished' ? (
@@ -205,7 +222,11 @@ export default function App() {
         </div>
 
         {status !== 'idle' && status !== 'finished' && nextPhase && (
-          <div className="next-under" aria-label="다음 운동">
+          <div
+            className="next-under"
+            aria-label="다음 운동"
+            style={{ '--next-phase-color': nextColor } as React.CSSProperties}
+          >
             <span className="next-under-label">다음</span>
             <span className="next-under-icon">{PHASE_ICONS[nextPhase.type]}</span>
             <span className="next-under-name">{nextPhase.label}</span>
