@@ -27,7 +27,6 @@ const PHASE_ICONS: Record<string, string> = {
 export default function App() {
   const {
     status,
-    totalRemaining,
     phaseRemaining,
     progress,
     phaseProgress,
@@ -71,11 +70,6 @@ export default function App() {
             <h1 className="app-title">운동 타이머</h1>
           </div>
           <div className="app-header-actions">
-            {status !== 'idle' && (
-              <div className="total-remaining">
-                전체 {formatTime(totalRemaining)} 남음
-              </div>
-            )}
             <button
               type="button"
               className="header-btn"
@@ -221,28 +215,29 @@ export default function App() {
         </div>
         </div>
 
-        {status !== 'idle' && status !== 'finished' && nextPhase && (
-          <div
-            className="next-under"
-            aria-label="다음 운동"
-            style={{ '--next-phase-color': nextColor } as React.CSSProperties}
-          >
-            <span className="next-under-label">다음</span>
-            <span className="next-under-icon">{PHASE_ICONS[nextPhase.type]}</span>
-            <span className="next-under-name">{nextPhase.label}</span>
-            <span className="next-under-time">{formatTime(nextPhase.duration)}</span>
-          </div>
-        )}
-        </div>
-
-        {/* Controls */}
-        <div className="controls">
-          {status === 'idle' && (
+        <div className="bottom-slot" aria-label="하단 영역">
+          {status === 'idle' ? (
             <button className="btn btn-start" onClick={start}>
               <span className="btn-icon">▶</span>
               시작
             </button>
+          ) : status === 'finished' ? null : nextPhase ? (
+            <div
+              className="next-under"
+              aria-label="다음 운동"
+              style={{ '--next-phase-color': nextColor } as React.CSSProperties}
+            >
+              <span className="next-under-label">다음</span>
+              <span className="next-under-icon">{PHASE_ICONS[nextPhase.type]}</span>
+              <span className="next-under-name">{nextPhase.label}</span>
+              <span className="next-under-time">{formatTime(nextPhase.duration)}</span>
+            </div>
+          ) : (
+            <div className="next-under next-under-placeholder" aria-label="마무리 운동">
+              마무리 운동
+            </div>
           )}
+        </div>
         </div>
 
       </div>
